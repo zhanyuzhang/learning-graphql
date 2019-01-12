@@ -8,16 +8,25 @@ var schema = buildSchema(`
  }
 `)
 
+var schema2 = buildSchema(`
+ type Query {
+   rollDice(numDice: Int!, numSides: Int): [Int]
+ }
+`)
+
 var root = {
-  hello: () => {
+  hello() {
     return 'Hello world'
+  },
+  rollDice(numDice = 1, numSides = 2) {
+    return [1, 2]
   }
 }
 
 var app = express();
 
 app.use('/graphql', graphHTTP({
-  schema,
+  schema: schema2,
   rootValue: root,
   graphiql: true
 }))
